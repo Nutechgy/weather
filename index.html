@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    /* Your custom styles go here */
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Weather Dashboard</h1>
+    <form id="cityForm">
+      <div class="form-group">
+        <label for="cityInput">Enter City:</label>
+        <input type="text" class="form-control" id="cityInput" placeholder="E.g., New York" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div id="weatherInfo" class="mt-4">
+      <!-- Weather information will be displayed here -->
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    // JavaScript code for fetching weather data and updating the UI goes here
+    document.getElementById('cityForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const cityName = document.getElementById('cityInput').value;
+      fetchWeatherData(cityName);
+    });
+
+    function fetchWeatherData(cityName) {
+      // Use a real weather API key and endpoint
+      const apiKey = 'YOUR_API_KEY';
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          // Process and display weather data
+          displayWeatherInfo(data);
+        })
+        .catch(error => {
+          console.error('Error fetching weather data:', error);
+        });
+    }
+
+    function displayWeatherInfo(data) {
+      // Update the UI with weather information
+      const weatherInfoContainer = document.getElementById('weatherInfo');
+      // Your UI update logic goes here
+    }
+  </script>
+</body>
+
+</html>
