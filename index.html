@@ -2,64 +2,327 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather Dashboard</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <style>
-    /* Your custom styles go here */
-  </style>
+
+  <title>5-Day Weather Forecast</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/weather-icons/css/weather-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
 </head>
 
 <body>
-  <div class="container mt-5">
-    <h1 class="text-center mb-4">Weather Dashboard</h1>
-    <form id="cityForm">
-      <div class="form-group">
-        <label for="cityInput">Enter City:</label>
-        <input type="text" class="form-control" id="cityInput" placeholder="E.g., New York" required>
+
+  <div class="head-container">
+    <h1>5-Day Weather Forecast</h1>
+
+    <div id="search-history">
+      <h2>Search History</h2>
+      <ul id="history-list"></ul>
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
+
+    <form id="search-form">
+      <label for="city-input">Enter City:</label>
+      <input type="text" id="city-input" placeholder="City" aria-label="Enter City">
+      <button type="button" id="search-button">Search</button>
     </form>
 
-    <div id="weatherInfo" class="mt-4">
-      <!-- Weather information will be displayed here -->
-    </div>
-  </div>
+  <div id="weather-info"></div>
+  <div id="forecast" class="weather-container"></div>
+ </div>
+   
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script>
-    // JavaScript code for fetching weather data and updating the UI goes here
-    document.getElementById('cityForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const cityName = document.getElementById('cityInput').value;
-      fetchWeatherData(cityName);
-    });
+  </div> 
 
-    function fetchWeatherData(cityName) {
-      // Use a real weather API key and endpoint
-      const apiKey = 'YOUR_API_KEY';
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+    <div class="weather-container" id="weather-container">
+        <div class="forecast-card sunny">
+            <div class="day">Monday</div>
+            <div class="weather-video sunny-bg">
+              <video loop muted autoplay>
+              <source src="c:\Users\terem\Downloads\production_id_5149124 (2160p).mp4" type="video/mp4">
+              </video>
+              </div>
+            <div class="details">
+              <div class="temperature">85°F</div>
+              <div class="condition">Bright and Sunny</div> 
+              <div class="wind-speed">10 km/h Wind</div>
+              <div class="humidity">60% Humidity</div>
+              <i class="wi wi-day-sunny"></i> <!-- Weather icon for sunny day -->
 
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          // Process and display weather data
-          displayWeatherInfo(data);
-        })
-        .catch(error => {
-          console.error('Error fetching weather data:', error);
-        });
-    }
+         </div>
+        </div>
 
-    function displayWeatherInfo(data) {
-      // Update the UI with weather information
-      const weatherInfoContainer = document.getElementById('weatherInfo');
-      // Your UI update logic goes here
-    }
-  </script>
+        <div class="forecast-card rainy">
+            <div class="day">Tuesday</div>
+            <div class="weather-video rainy-bg">
+              <video loop muted autoplay>
+              <source src="c:\Users\terem\Downloads\production_id_4832152 (720p).mp4" type="video/mp4">
+              </video>
+              </div>
+              <div class="details">
+                <div class="temperature">65°F</div>
+                <div class="condition">Rainy and Stormy</div>
+                <div class="wind-speed">10 km/h Wind</div>
+                <div class="humidity">60% Humidity</div>
+                <i class="wi wi-day-thunderstorm"></i>
+
+               </div>
+              </div>
+
+            <div class="forecast-card snowy">  
+            <div class="day">Wednesday</div>
+            <div class="weather-video snowy-bg">
+              <video loop muted autoplay>
+               <source src="c:\Users\terem\Downloads\pexels-mikhail-nilov-6507555 (1080p).mp4" type="video/mp4">
+              </video>
+              </div>
+              <div class="details">
+              <div class="temperature">40°F</div>
+              <div class="condition">Cold and Snowy</div>
+              <div class="wind-speed">10 km/h Wind</div>
+              <div class="humidity">60% Humidity</div>
+              <i class="wi wi-day-snow"></i> 
+            
+        </div>
+       </div> 
+
+        <div class="forecast-card Wet and Foggy">
+            <div class="day">Thursday</div>
+            <div class="weather-video foggy-bg">
+            <video loop muted autoplay>
+              <source src="c:\Users\terem\Downloads\pexels_videos_1405527 (1080p).mp4" type="video/mp4">
+            </video>
+            </div>  
+            <div class="details">
+              <div class="temperature">40°F</div>
+              <div class="condition">Foggy</div>
+              <div class="wind-speed">10 km/h Wind</div>
+              <div class="humidity">60% Humidity</div>
+              <i class="wi wi-day-fog"></i>
+
+            </div>
+           </div>
+       
+        <div class="forecast-card Cloudy and Windy">
+            <div class="day">Friday</div>
+            <div class="weather-video cloudy windy-bg">
+              <video loop muted autoplay>
+              <source src="c:\Users\terem\Downloads\pexels_videos_2018959 (1080p).mp4">  
+              </video>
+              </div>
+            <div class="details">
+              <div class="temperature">40°F</div>
+              <div class="condition">Cloudy and Windy</div>
+              <div class="wind-speed">10 km/h Wind</div>
+              <div class="humidity">60% Humidity</div>
+              <i class="wi wi-day-cloudy-windy"></i> 
+
+            </div>
+         </div>
+
+       </div> 
+
+
 </body>
-
 </html>
+
+<style>
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    background: url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')center/cover
+}
+
+.header-container {
+  text-align:center;
+  color: whitesmoke;
+  margin-top: 20px;
+  place-self: start-end;
+  }
+
+.day {
+  color:blue;
+}
+
+  h1 {
+    color:blue;
+    font-size: auto;
+    display: flex;
+    place-self: start end;
+    align-self: center;
+}
+.search-form {
+            margin-bottom: 20px;
+        }
+
+        #weather-info, #forecast {
+            margin-top: 20px;
+        }
+
+        #search-history {
+            margin-top: 20px;
+        }
+
+        #history-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #history-list li {
+            margin-bottom: 5px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+.weather-container {
+    color: whitesmoke;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 100%; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.forecast-card {
+    border-radius: 10px;
+    background-color: navy blue; /* Slightly transparent white background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 250px;
+    height: 450px;
+    margin: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+.forecast-card:hover {
+  transform: scale(1.1);
+}
+
+.forecast-card .day {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    z-index: 1;
+}
+
+.forecast-card .weather-video {
+  position: relative;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+.forecast-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.forecast-card .details {
+  position: absolute;
+  bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+.forecast-card .details > div {
+    margin-bottom: 5px;
+}
+
+.forecast-card .details .temperatre,
+.forecast-card .details .condition,
+.forecast-card .details .wind-speed,
+.forecast-card .details .humidity {
+    color: #fff;
+}
+
+</style>
+
+ <!-- Add javascript-->
+<script>
+
+<script src="script.js" defer  
+  
+  const apiKey ='55da60099dd1b8e7378a0a5da0283fba'
+  const baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  const fetchWeatherData = async (city) => {
+    try {
+                const response = await fetch(`${baseUrl}?q=${randomCity}&appid=${apiKey}`);
+                if (response.ok) {
+                const data = await response.json();
+                updateWeatherVideo(data.weather[0].main);
+                updateWeatherInfo(data);
+                updateSearchHistory(city)
+                } else {
+                   console.error('Weather API request failed with status: ${response.status}');
+            }
+          } catch (error) {
+              console.error("Error fetching weather data:",error);
+              
+          }
+        };
+        function updateWeatherInfo(data) {}
+          const updateWeatherInfoElement = document.getElementByID('weather-info');
+         weatherInfoElement.innerHTML = `
+        <div>City: ${data.name}</div>
+        <div>Date: ${new Date(data.dt * 1000).toDateString()}</div>
+        <div>Temperature: ${data.main.temp}°F</div>
+        <div>Humidity: ${data.main.humidity}%</div>
+        <div>Wind Speed: ${data.wind.speed} km/h</div>
+        <div>Weather Icon: <i class="wi wi-${data.weather[0].icon}"></i></div>
+        ';
+      
+        const updateWeatherVideo = (weatherCondition) === {
+            const videoElement = document.querySelector(".forecast-card .weather-video video");
+            if (weatherCondition === "Clear") {
+                videoElement.src = "c:\\Users\\terem\\Downloads\\pexels-mikhail-nilov-6507555 (1080p).mp4"
+            } else if (weatherCondition === "Rain") {
+                videoElement.src = "c:\\Users\\terem\\Downloads\\production_id_4832152 (720p).mp4"
+            }
+            // Add more conditions
+        
+
+        // Fetch weather data and update videos on page load
+        window.onload = () === }
+            const randomCity = "YOUR_RANDOM_CITY"; // Replace with your random city logic
+            fetchWeatherData(randomCity);
+        
+
+        document.getElementById('search-button').addEventListener('click', function () {
+            var cityInput = document.getElementById('city-input').value;
+            if (cityInput.trim() !== '') {}
+                fetchWeatherData(cityInput)
+             else {
+                alert('Please enter a city');
+            }
+        );
+
+        function updateSearchHistory(city) {}
+            var historyList = document.getElementById('history-list');
+            var listItem = document.createElement('li');
+            listItem.textContent = city;
+        
+            // Add click event to each history item to retrieve weather for that city again
+            listItem.addEventListener()'click', function () 
+                fetchWeatherData(city)
+            
+
+            historyList.appendChild(listItem);
+        
+
+        updateSearchHistory(cityInput);
+      
+
+    </script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
