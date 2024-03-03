@@ -1,110 +1,108 @@
+document.addEventListener('DOMContentLoaded'), function () {
+  const currentApiKey = '55da60099dd1b8e7378a0a5da0283fba'; // API key for current weather
+   const forecastApiKey = '044dc32dae5bad14fd2034fe6bb5047a'; // API key for 5-day forecast
+   const currentBaseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+   const forecastBaseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
-window.onload = () => {
-  const apiKey = '55da60099dd1b8e7378a0a5da0283fba';
-  const baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  function fetchWeatherData(city) {
+  fetch(`${currentBaseUrl}?q=${city}&appid=${currentApiKey}&units=imperial`)
 
-  const fetchWeatherData = async (city) => {
-    try {
-      const response = await fetch(`${baseUrl}?q=${city}&appid=${apiKey}&units=imperial`);
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data)
-        updateWeatherVideo(data.weather[0].main);
-        updateWeatherInfo(data);
-        updateSearchHistory(city)
-      } else {
-        console.error('Weather API request failed with status: ${response.status}');
-      }
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-
-    }
-  };
-
-
-  const updateWeatherVideo = (weatherCondition) => {
-    const videoElement = document.querySelector(".forecast-card .weather-video video");
-    if (weatherCondition === "rainy") {
-      videoElement.src = "c:\\Users\\terem\\Downloads\\pexels-mikhail-nilov-6507555 (1080p).mp4"
-    } else if (weatherCondition === "Rainy") {
-      videoElement.src = "c:\\Users\\terem\\Downloads\\production_id_4832152 (720p).mp4"
-    }
-    // Add more conditions
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Log API response data
+        // Update current weather info
+        updateCurrentWeather(data);
+        // Fetch 5-day forecast data
+        return fetch(`${forecastBaseUrl}?q=${city}&appid=${forecastApiKey}&units=imperial`);
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Log API response data
+        // Update forecast
+        updateForecast(data);
+    })
+    .catch(error => console.error('Error fetching weather data:', error));
   }
-  if (rain){
-    video.src = 'C:\Users\terem\OneDrive\Documents\weather\videos\scattered showers.mp4'
 
- }else if (cloudy) '\Users\terem\OneDrive\Documents\weather\videos\cloudy.mp4'
-
- if (heavyWind,rain,floodWatch)
-    video.src = 'C:\Users\terem\OneDrive\Documents\weather\videos\heavy wind,rain,flood watch.mp4'
- 
-
-  else if (brightandsunny)'C:\Users\terem\OneDrive\Documents\weather\videos\brightandsunny.mp4'
-
-  if (foggy)'C:\Users\terem\OneDrive\Documents\weather\videos\foggy.mp4'
-
-  else if (lightRain)'C:\Users\terem\OneDrive\Documents\weather\videos\light rain.mp4'
-
-  if (snowy)'C:\Users\terem\OneDrive\Documents\weather\videos\snowy.mp4'
-
-  else if (scatteredShowers)'C:\Users\terem\OneDrive\Documents\weather\videos\scattered showers.mp4'
-
-  if (tornadoWatch)'C:\Users\terem\OneDrive\Documents\weather\videos\tornado.mp4'
-
-
-  // // Fetch weather data and update videos on page load
-  // window.onload = () => {
-  //   const randomCity = "YOUR_RANDOM_CITY"; // Replace with your random city logic
-  //   fetchWeatherData(randomCity);
-  // }
-
-  document.getElementById('search-button').addEventListener('click', function () {
-    var cityInput = document.getElementById('city-input').value;
-    if (cityInput.trim() !== '') {
-      fetchWeatherData(cityInput);
-    } else {
-      alert('Please enter a city');
+   function updateWeatherInfo (data) {
+     // Update current weather info on the page
+     const currentWeatherElement = document.getElementById('current-weather');
+     currentWeatherElement.innerHTML = `
+       <div>City: ${data.name}</div>
+       <div>Date: ${new Date(data.dt * 1000).toDateString()}</div>
+       <div>Temperature: ${data.main.temp}°F</div>
+       <div>Humidity: ${data.main.humidity}%</div>
+       <div>Wind Speed: ${data.wind.speed} km/h</div>
+       <div>Weather Icon: <i class="wi wi-${data.weather[0].icon}"></i></div>
+     `;
+     
+     // Update weather video
+     updateWeatherVideo(data.weather[0].main.toLowerCase());
+   }
+   function updateForecast  (data)  { 
+     // Update forecast for the next 5 days
+     const forecastElement = document.getElementById('forecast-cards');
+     forecastCardsElement.innerHTML = ''; // Clear previous forecast data
+     for (let i = 0; i < 5; i++) {
+       const forecast = data.list[i];
+       const forecastCard = document.createElement('div');
+       forecastCard.classList.add('forecast-card');
+       forecastElement.innerHTML += `
+         <div class="forecast-card">
+           <div class="day">${new Date(forecast.dt * 1000).toLocaleDateString('en-US', { weekday: 'long' })}</div>
+           <div class="temperature">${forecast.main.temp}°F</div>
+           <div class="condition">${forecast.weather[0].description}</div>
+           <div class="wind-speed">${forecast.wind.speed} km/h Wind</div>
+           <div class="humidity">${forecast.main.humidity}% Humidity</div>
+           <i class="wi wi-${forecast.weather[0].icon}"></i>
+       `;
+       forecastElement.appendChild(forecastCard);
+      }
     }
+   }
+   function updateWeatherVideo(weatherCondition) {
+     const videoElement = document.querySelector(".forecast-card .weather-video video");
+     switch (weatherCondition) {
+       case "snowy":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\snowy.mp4";
+       break;
+     case "cloudy":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\cloudy.mp4";
+       break;
+     case "rain":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\scattered showers.mp4";
+       break;
+     case "heavyWind,rain,floodWatch":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\heavy wind,rain,floodwatch.mp4";
+       break;
+     case "scatteredShowers":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\scattered showers.mp4";
+       break;
+     case "lightRain":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\light rain.mp4";
+       break;
+     case "brightandsunny":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\brightandsunny.mp4";
+       break;
+     case "foggy":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\foggy.mp4";
+       break;
+     case "tornadoWatch":
+       videoElement.src = "C:\\Users\\terem\\OneDrive\\Documents\\weather\\videos\\tornado.mp4";
+       break;
+     default:
+       // Handle default case
+       break;
+   
+   }
+  
+     }
+     // Fetch weather data and update videos on page load
+     const searchButton = document.getElementById('search-button');
+  searchButton.addEventListener('click', function() {
+    const cityInput = document.getElementById('city-input');
+    const city = cityInput.value;
+    fetchWeatherData(city);
   });
 
-
-  function updateSearchHistory(city) {
-    var historyList = document.getElementById('history-list');
-    var listItem = document.createElement('li');
-    listItem.textContent = city;
-
-    // Add click event to each history item to retrieve weather for that city again
-    listItem.addEventListener('click', function () {
-      fetchWeatherData(city);
-
-      historyList.appendChild(listItem);
-
-
-    });
-  }
-
-  function updateWeatherInfo(city) {
-    // use other api to get 5 day forecast
-    const weatherContainer = document.querySelector('#weather-container')
-    weatherContainer.innerHTML = ''
-    console.log(weatherContainer)
-    const forecast = document.createElement('div')
-    forecast.innerHTML = `
-    <div class="day">${data.name}</div>
-<div class="weather-video sunny-bg">
-  <video loop muted autoplay>
-    <source src=${data.video} type="video/mp4"
-      alt="${data.text}">
-  </video>
-</div>
-<div class="details">
-  <div class="temperature">${data.temp}</div>
-  <div class="condition">${data.condition}</div>
-  <div class="wind-speed">${data.wind} km/h Wind</div>
-  <div class="humidity">${data.humidity}% Humidity</div>
-  ${data.icon} <!-- Weather icon for sunny day -->
-</div>
-    `
-  }
-}                                                                 
+   
