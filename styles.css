@@ -5,7 +5,11 @@ body {
     display: flex;
     flex-direction:column;
     align-items: center;
+<<<<<<< HEAD
     background: url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')cen
+=======
+    background: url('https://images.unsplash.com/photo-1499346030926
+>>>>>>> 7903244380b558193e09ff4be847981a2133e84c
 }
 
 .header-container {
@@ -61,7 +65,11 @@ body {
 
 .forecast-card {
     border-radius: 10px;
+<<<<<<< HEAD
     background-color: navy blue; /* Slightly transparent white background */
+=======
+    background-color: navy blue; /* Slightly transparent white bac
+>>>>>>> 7903244380b558193e09ff4be847981a2133e84c
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
     width: 250px;
