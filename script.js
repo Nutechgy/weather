@@ -112,4 +112,4 @@ currentWeatherBtn.addEventListener('click', function() {
      alert('Please enter a city name.');
    }
  });
-})
+});
