@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/weather-icons/css/weather-icons.min.css">
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  </head>
 
   <body>
 
@@ -25,12 +25,23 @@
           <label for="city">Enter City:</label>
           <input type="text" id="city" placeholder="City" aria-label="Enter City">
           <button type="button" id="search-button">Search</button>
+          <!-- Add a button to switch between current weather and 5-day forecast -->
+<button id="current-weather-btn">Current Weather</button>
+<button id="forecast-btn">5-Day Forecast</button>
+
+<!-- Add a container for the 5 forecast index cards -->
+<div id="forecast-cards" class="forecast-cards"></div>
       </form>
 
       <div id="current-weather" class="weather-container">
         
           <!-- Current weather info will be updated here -->
       </div>
+      <div class="index-card">
+        <div class="weather-video-container">
+          <video id="weather-video" loop muted autoplay>
+            <!-- Weather video will be updated here -->
+          </video>
 
       <div id="forecast" class="forecast-cards">
           <!-- 5-day forecast cards will be updated here -->
@@ -45,9 +56,6 @@
           </div> -->
       </div>
   </div>
-</body>
-
-</html>
 </body>
 
 </html>
@@ -263,3 +271,4 @@
     const city = cityInput.value;
     fetchWeatherData(city);
   });
+  </script>
