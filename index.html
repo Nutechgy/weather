@@ -35,7 +35,7 @@
         
           <!-- Current weather info will be updated here -->
       </div>
-      <div class="index-card">
+      <div class="forecast-card">
         <div class="weather-video-container">
           <video id="weather-video" loop muted autoplay>
             <!-- Weather video will be updated here -->
@@ -187,11 +187,28 @@
 <!-- Add javascript-->
 <script>
 
-  document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const currentWeatherApiKey = '55da60099dd1b8e7378a0a5da0283fba';
-    const forecastApiKey = '044dc32dae5bad14fd2034fe6bb5047a';
     const currentWeatherBaseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+    const forecastApiKey = '044dc32dae5bad14fd2034fe6bb5047a';
     const forecastBaseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
+
+//Function to get weather videos based on weather conditions
+function updateWeatherVideo(weatherCondition) {
+const videoPath = "videos/";
+const videoMap = {
+"snowy": "snowy.mp4",
+"cloudy": "cloudy.mp4",
+"rain": "scattered showers.mp4",
+"heavyWind,rain,floodWatch": "heavy wind,rain,floodwatch.mp4",
+"scatteredShowers": "scattered showers.mp4",
+"lightRain": "light rain.mp4",
+"brightandsunny": "brightandsunny.mp4",
+"foggy": "foggy.mp4",
+"tornadoWatch": "tornado.mp4"
+};
+return videoPath + (videoMap[weatherCondition] || "default.mp4");
+}
 
     //Function to fetch current weather data
  function fetchCurrentWeather(city) {
@@ -199,20 +216,20 @@
      .then(response => response.json())
      .then(data => {
        console.log(data);
-       updateCurrentWeather(data);
+       updateCurrentWeatherInfo(data);
        updateWeatherVideo(data.weather[0].main.toLowerCase());
        return fetch(`${forecastBaseUrl}?q=${city}&appid=${forecastApiKey}&units=imperial`);
      })
      .then(response => response.json())
      .then(data => {
        console.log(data);
-       updateForecast(data);
+       updateCurrentWeatherInfo(data);
      })
      .catch(error => console.error('Error fetching weather data:', error));
  }
    // Function to update current weather info
  function updateCurrentWeatherInfo(data) {
-   const currentWeatherElement = document.getElementById('current-weather');
+  const currentWeatherElement = document.getElementById('current-weather');
    currentWeatherElement.innerHTML = `
      <div>City: ${data.name}</div>
      <div>Date: ${new Date(data.dt * 1000).toDateString()}</div>
@@ -221,7 +238,7 @@
      <div>Wind Speed: ${data.wind.speed} km/h</div>
      <div>Weather Icon: <i class="wi wi-${data.weather[0].icon}"></i></div>
    `;
- }
+  }
    
 // Function to fetch 5-day forecast data
 function fetchForecast(city) {
@@ -235,13 +252,25 @@ function fetchForecast(city) {
  }
 
 //Function to update the 5 day forecast index cards
-   function updateForecast(data) {
+   function updateForecastCards(data) {
    const forecastElement = document.getElementById('forecast-cards');
    forecastElement.innerHTML = ''; // Clear previous forecast data
-   for (let i = 0; i < 5; i++) {
+   
+    // Filter the forecast data to only include one forecast per day
+    const filteredForecast = data.list.filter((forecast, index, arr) => {
+        const currentDate = new Date(forecast.dt_txt).getDate();
+        const nextDate = index < arr.length - 1 ? new Date(arr[index + 1].dt_txt).getDate() : null;
+        return currentDate !== nextDate;
+    });
+
+
+   for (let i = 0; i < data.list.length; i++) {
      const forecast = data.list[i];
      const forecastCard = document.createElement('div');
      forecastCard.classList.add('forecast-card');
+
+     const forecastDate = new Date(forecast.dt_txt); // Use the forecast date/time
+
      forecastCard.innerHTML = `
        <div class="day">${new Date(forecast.dt * 1000).toLocaleDateString('en-US', { weekday: 'long' })}</div>
        <div class="temperature">${forecast.main.temp}°F</div>
@@ -251,31 +280,20 @@ function fetchForecast(city) {
        <i class="wi wi-${forecast.weather[0].icon}"></i>
        <div class="weather-video-container">
        <video loop muted autoplay>
-         <source src="${getWeatherVideo(forecast.weather[0].main.toLowerCase())}" type="video/mp4">
+         <source src="${updateWeatherVideo(forecast.weather[0].main.toLowerCase())}" type="video/mp4">
        </video>
      </div>
      `;
-     forecastCardElement.appendChild(forecastCard);
+     forecastElement.appendChild(forecastCard);
    }
- }
+  }    
 
-   //Function to get weather videos based on weather conditions
-function getWeatherVideo(weatherCondition) {
-  const videoPath = "videos.js/";
-  const videoMap = {
-      "snowy": "snowy.mp4",
-      "cloudy": "cloudy.mp4",
-      "rain": "scattered showers.mp4",
-      "heavyWind,rain,floodWatch": "heavy wind,rain,floodwatch.mp4",
-      "scatteredShowers": "scattered showers.mp4",
-      "lightRain": "light rain.mp4",
-      "brightandsunny": "brightandsunny.mp4",
-      "foggy": "foggy.mp4",
-      "tornadoWatch": "tornado.mp4"
-  };
-  return videoPath + (videoMap[weatherCondition] || "default.mp4");
+  // Function to get the appropriate icon class
+function getIconClass(iconCode) {
+    // Define a prefix for the icon class if necessary
+    const prefix = 'wi-';
+    return prefix + iconCode;
 }
-
 // Event listener for search button click for current weather
 const currentWeatherBtn = document.getElementById('current-weather-btn');
 currentWeatherBtn.addEventListener('click', function() {
@@ -299,5 +317,8 @@ currentWeatherBtn.addEventListener('click', function() {
    } else {
      alert('Please enter a city name.');
    }
- });
-})
+ })
+});
+
+   </script>
+

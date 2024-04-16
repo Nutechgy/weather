@@ -5,6 +5,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const currentWeatherBaseUrl = 'https://api.openweathermap.org/data/2.5/weather';
   const forecastBaseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
+//Function to get weather videos based on weather conditions
+function getWeatherVideo(weatherCondition) {
+const videoPath = "videos/";
+const videoMap = {
+"snowy": "snowy.mp4",
+"cloudy": "cloudy.mp4",
+"rain": "scattered showers.mp4",
+"heavyWind,rain,floodWatch": "heavy wind,rain,floodwatch.mp4",
+"scatteredShowers": "scattered showers.mp4",
+"lightRain": "light rain.mp4",
+"brightandsunny": "brightandsunny.mp4",
+"foggy": "foggy.mp4",
+"tornadoWatch": "tornado.mp4"
+};
+return videoPath + (videoMap[weatherCondition] || "default.mp4");
+}
+
+
  //Function to fetch current weather data
   function fetchCurrentWeather(city) {
     fetch(`${currentWeatherBaseUrl}?q=${city}&appid=${currentWeatherApiKey}&units=imperial`)
@@ -25,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to update current weather info
   function updateCurrentWeatherInfo(data) {
-    const currentWeatherElement = document.getElementById('current-weather');
+    const forecastCards = document.querySelectorAll('.forecast-card');
+forecastCards.forEach((card) => {
     currentWeatherElement.innerHTML = `
       <div>City: ${data.name}</div>
       <div>Date: ${new Date(data.dt * 1000).toDateString()}</div>
@@ -34,8 +53,9 @@ document.addEventListener('DOMContentLoaded', function () {
       <div>Wind Speed: ${data.wind.speed} km/h</div>
       <div>Weather Icon: <i class="wi wi-${data.weather[0].icon}"></i></div>
     `;
-  }
-    
+  });
+}
+
  // Function to fetch 5-day forecast data
  function fetchForecast(city) {
   fetch(`${forecastBaseUrl}?q=${city}&appid=${forecastApiKey}&units=metric`)
@@ -48,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
  //Function to update the 5 day forecast index cards
-    function updateForecast(data) {
+    function updateForecastCards(data) {
     const forecastElement = document.getElementById('forecast-cards');
     forecastElement.innerHTML = ''; // Clear previous forecast data
     for (let i = 0; i < 5; i++) {
@@ -68,25 +88,9 @@ document.addEventListener('DOMContentLoaded', function () {
         </video>
       </div>
       `;
-      forecastCardElement.appendChild(forecastCard);
+      forecastElement.appendChild(forecastCard);
     }
   }
-    //Function to get weather videos based on weather conditions
-function getWeatherVideo(weatherCondition) {
-  const videoPath = "videos.js/";
-  const videoMap = {
-      "snowy": "snowy.mp4",
-      "cloudy": "cloudy.mp4",
-      "rain": "scattered showers.mp4",
-      "heavyWind,rain,floodWatch": "heavy wind,rain,floodwatch.mp4",
-      "scatteredShowers": "scattered showers.mp4",
-      "lightRain": "light rain.mp4",
-      "brightandsunny": "brightandsunny.mp4",
-      "foggy": "foggy.mp4",
-      "tornadoWatch": "tornado.mp4"
-  };
-  return videoPath + (videoMap[weatherCondition] || "default.mp4");
-}
 
 // Event listener for search button click for current weather
 const currentWeatherBtn = document.getElementById('current-weather-btn');
@@ -111,5 +115,5 @@ currentWeatherBtn.addEventListener('click', function() {
    } else {
      alert('Please enter a city name.');
    }
- });
-});
+ })
+})

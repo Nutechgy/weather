@@ -6,6 +6,7 @@ body {
     flex-direction: column;
     align-items: center;
     background: url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')center/cover
+
   }
   .header-container {
     text-align: center;
@@ -43,10 +44,10 @@ body {
     text-decoration: underline;
   }
   .weather-container {
-    color: whitesmoke;
+    color: black; 
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: flex-end;
     height: 100%;
     padding: 20px;
@@ -94,6 +95,7 @@ body {
     padding: 20px;
     background: rgba(0, 0, 0, 0.5);
     text-align: left;
+    color: black;
   }
   .forecast-card .details>div {
     margin-bottom: 5px;
@@ -102,5 +104,5 @@ body {
   .forecast-card .details .condition,
   .forecast-card .details .wind-speed,
   .forecast-card .details .humidity {
-    color: #fff;
+    color: black;
   }
