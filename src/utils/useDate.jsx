@@ -7,9 +7,7 @@ export const useDate = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setDate(new Date())
-
-
-    }, 60*1000)
+        }, 60*1000)
 
     return () => {
         clearInterval(timer)
