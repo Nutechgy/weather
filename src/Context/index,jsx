@@ -1,4 +1,5 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 const StateContext = createContext(undefined);
@@ -8,8 +9,6 @@ export const StateContextProvider = ({ children }) => {
     const [values, setValues] = useState([]);
     const [place, setPlace] = useState('Jaipur');
     const [thisLocation, setLocation] = useState('');
-
-    // Fetch weather data from the API
     const fetchWeather = async () => {
         const forecastApiKey = '044dc32dae5bad14fd2034fe6bb5047a';
         const forecastBaseUrl = 'https://api.openweathermap.org/data/2.5/weather';
@@ -27,10 +26,11 @@ export const StateContextProvider = ({ children }) => {
         try {
             const response = await axios.request(options);
             console.log(response.data);
-            const thisData = response.data; // Assuming the response contains necessary data directly
-            setLocation(thisData.name); // Assuming location data is directly accessible in the response
-            setValues(thisData.values); // Assuming values data is directly accessible in the response
-            setWeather(thisData); // Setting weather data directly from the response
+            const thisData = response.data; 
+            setLocation(thisData.name); 
+            setValues(thisData.values); 
+            setWeather(thisData); 
+
         } catch (e) {
             console.error(e);
             alert('Failed to fetch weather data.');
@@ -38,23 +38,10 @@ export const StateContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchWeather(); // Fetch weather data when place changes
+        fetchWeather()
     }, [place]);
 
     useEffect(() => {
         console.log(values);
     }, [values]);
-
-    return (
-        <StateContext.Provider value={{
-            weather:weather,
-            setPlace:setPlace,
-            values: values,
-            thisLocation: thisLocation,
-        }}>
-            {children}
-        </StateContext.Provider>
-    );
-};
-
-export const useStateContext = () => useContext(StateContext);
+}

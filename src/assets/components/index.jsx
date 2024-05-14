@@ -1,3 +1,7 @@
 export {default as BackgroundLayout} from './BackgroundLayout'
 export {default as WeatherCard} from './WeatherCard'
 export {default as MiniCard} from './MiniCard'
+export {default as AlarmForm} from './AlarmForm'
+export {default as videos} from './videos'
+export {default as audio} from './audio'
+export {default as alarmSerrvices} from './alarmService'

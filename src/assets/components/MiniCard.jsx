@@ -20,7 +20,7 @@ const Miniard = ({
 
 }) => {
 
-    const [icon, setIcon] = useState(sun)
+    const [icon, setIcon] = useState()
     const { time } = useDate()
 
     useEffect(() => {

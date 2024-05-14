@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Video from './components/Video';
-import audioSnippet from './audio/audio_snippet.mp3';
+import Video from './components/video';
+import clearVideo from './videos/.mp4';
+import cloudyVideo from './videos/clear.mp4';
+import foggyVideo from './videos/cloudy.mp4';
+import rainVideo from './videos/fog.mp4';
+import scatteredShowersVideo from './videos/rain.mp4';
+import snowVideo from './videos/snow.mmp4';
+import stormyVideo from './video/stormy.mp4';
+import tornadoVideo from './video/tornado';
+import windyVideo from './video/windy.mp4';
+
 
 
 const Video = () => {

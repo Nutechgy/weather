@@ -1,5 +1,4 @@
-import React from 'react'
-import { useStateContext } from '../Context'
+import React, { useStateContext } from '../Context'
 //videos
 import clear from '..assets/video.jsx/clear.mp4'
 import cloudy from '..assets/video.jsx/cloudy.mp4'

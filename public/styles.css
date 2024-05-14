@@ -5,23 +5,23 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2000&h=1000&fit=crop');
-  background-size: cover;
+  background :url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2000&h=1000&fit=crop');
+  background-position: center;
   background-attachment: fixed;
+  
 }
-
 .header-container {
   text-align: center;
   color: black;
   margin-top: 20px;
-}
+ }
+
 
 h1 {
   color: blue;
   font-size: auto;
   display: flex;
-  place-self: start end;
-  align-self: center;
+  text-align: center;
 }
 
 .search-form {
@@ -44,7 +44,7 @@ h1 {
 }
 
 /* Styles for 5 day forecast */
-.forecast-container {
+.forecast-cards {
   display: flex; /* or grid */
   flex-wrap: wrap;
   justify-content: space-between; /* or other flexbox/grid properties */
@@ -52,9 +52,6 @@ h1 {
 
 
 .forecast-card {
-  border-radius: 10px;
-  background-color: transparent;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
   width: 250px;
   height: 450px;
@@ -65,27 +62,6 @@ h1 {
   overflow: hidden;
 }
 
-.weather-details {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.5); /* Transparent background */
-  color: whitesmoke;
-  width: 100%; /* Take full width of the card */
-  box-sizing: border-box;
-}
-
-.weather-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-end;
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
 .forecast-card:hover {
   transform: scale(1.1);
 }
@@ -93,19 +69,26 @@ h1 {
 .day {
   font-size: 1.5em;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   text-align: center;
   color: blue;
   z-index: 1;
 }
-
-.forecast-card video {
-  position: relative;
+.forecast-card .video-container {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+}
+.forecast-card .video-container video {
+  width: 100%;
 }
 
+.weather-details-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Transparent background */
+  color: black;
+}
 
 wi {
   /* Add necessary styles to display the icon */
